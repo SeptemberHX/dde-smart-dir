@@ -52,7 +52,7 @@ void SmartDirWidget::loadData(const QFileInfoList &infoList)
         this->m_tableWidget->setCellWidget(r, 0, itemWidget);
     }
 
-    this->setFixedHeight(SmartDirSettings::instance()->getCountPerPage() * this->m_tableWidget->verticalHeader()->defaultSectionSize() + 20);
+    this->setFixedHeight(SmartDirSettings::instance()->getCountPerPage() * this->m_tableWidget->verticalHeader()->defaultSectionSize() + 10);
 }
 
 void SmartDirWidget::doubleClick(const QModelIndex &index) {
