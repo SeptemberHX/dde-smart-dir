@@ -12,7 +12,7 @@ SmartDirSettingWidget::SmartDirSettingWidget(QWidget *parent) :
     ui->removeToolButton->setEnabled(false);
 
     connect(ui->listWidget, &QListWidget::currentRowChanged, this, [this](int r) {
-        ui->removeToolButton->setEnabled(r);
+        ui->removeToolButton->setEnabled(r >= 0);
     });
     connect(ui->removeToolButton, &QToolButton::clicked, this, &SmartDirSettingWidget::removeCurrentPath);
     connect(ui->addToolButton, &QToolButton::clicked, this, &SmartDirSettingWidget::addNewPath);
