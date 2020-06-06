@@ -23,6 +23,9 @@ SmartDirSettingWidget::SmartDirSettingWidget(QWidget *parent) :
         SmartDirSettings::instance()->setCountPerPage(n);
     });
 
+    ui->appNameLabel->setText("DDE Smart Dir Plugin");
+    ui->appVersionLabel->setText("0.1.2");
+
     this->loadData();
 }
 

@@ -40,12 +40,14 @@ void SmartDirSettings::saveSettings() {
     QSettings settings("dde-smart-dir", "smart-dir");
     settings.setValue("main/dirs", this->_watchedDirPaths);
     settings.setValue("main/size", this->itemSize);
+    settings.setValue("main/countPerPage", this->countPerPage);
 }
 
 void SmartDirSettings::readSettings() {
     QSettings settings("dde-smart-dir", "smart-dir");
     this->_watchedDirPaths = settings.value("main/dirs", this->watchedDirPaths()).value<QStringList>();
     this->itemSize = settings.value("main/size", this->itemSize).toUInt();
+    this->countPerPage = settings.value("main/countPerPage", this->countPerPage).toUInt();
 }
 
 void SmartDirSettings::setWatchedDirPaths(const QStringList &watchedDirPaths) {
@@ -59,6 +61,7 @@ int SmartDirSettings::getCountPerPage() const {
 
 void SmartDirSettings::setCountPerPage(int countPerPage) {
     SmartDirSettings::countPerPage = countPerPage;
+    emit settingsChanged();
 }
 
 void SmartDirSettings::setDefaultCountPerPage() {
