@@ -21,12 +21,17 @@ class SmartDirItemWidget : public QWidget
 public:
     explicit SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
     const QFileInfo& fileInfo() const;
+    void setFileInfo(const QFileInfo& fileInfo);
 
 private:
     QFileInfo m_fileInfo;
     QLabel *m_iconLabel;
     QLabel *m_nameLabel;
     QHBoxLayout *m_layout;
+    QVBoxLayout *m_textLayout;
+    QWidget *m_textWidget;
+    QLabel *m_filePathLabel;
+    QLabel *m_fileDataLabel;
 };
 
 class SmartDirTableWidget : public QTableWidget

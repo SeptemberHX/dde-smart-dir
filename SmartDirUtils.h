@@ -6,12 +6,20 @@
 #define DDE_SMART_DIR_SMARTDIRUTILS_H
 
 #include <QFileInfoList>
+#include <QCache>
+#include <QPixmap>
+#include <QMimeDatabase>
+
 
 class SmartDirUtils {
 
 public:
     static QFileInfoList fileInfoList(const QStringList& pathList);
+    static const QPixmap& getFileIcon(const QFileInfo& fileInfo, int w, int h);
 
+private:
+    static QCache<QString, QPixmap> pixmapCache;
+    static QMimeDatabase db;
 };
 
 

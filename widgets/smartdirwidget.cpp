@@ -15,6 +15,7 @@
 #include <QDir>
 #include "SmartDirUtils.h"
 #include <QTimer>
+#include <QDateTime>
 
 #define ICON_SIZE 64
 
@@ -42,15 +43,20 @@ SmartDirWidget::SmartDirWidget(QWidget *parent) :
 
 void SmartDirWidget::loadData(const QFileInfoList &infoList)
 {
-    this->m_tableWidget->clear();
     this->m_tableWidget->setColumnCount(1);
-    this->m_tableWidget->setRowCount(0);
 
-    for (int r = 0; r < infoList.size(); ++r) {
+    int r;
+    for (r = 0; r < infoList.size() && r < this->m_tableWidget->rowCount(); ++r) {
+        auto *itemWidget = dynamic_cast<SmartDirItemWidget*>(this->m_tableWidget->cellWidget(r, 0));
+        itemWidget->setFileInfo(infoList.at(r));
+    }
+
+    for (; r < infoList.size(); ++r) {
         this->m_tableWidget->insertRow(r);
         auto *itemWidget = new SmartDirItemWidget(infoList[r], this->m_tableWidget);
         this->m_tableWidget->setCellWidget(r, 0, itemWidget);
     }
+    this->m_tableWidget->setRowCount(infoList.size());
 
     this->setFixedHeight(SmartDirSettings::instance()->getCountPerPage() * this->m_tableWidget->verticalHeader()->defaultSectionSize() + 10);
 }
@@ -78,30 +84,67 @@ SmartDirItemWidget::SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent)
     this->setToolTip(fileInfo.absoluteFilePath());
 
     this->m_iconLabel = new QLabel(this);
-//    m_iconLabel->setScaledContents(true);
     m_iconLabel->setFixedSize(ICON_SIZE, ICON_SIZE);
     m_iconLabel->setAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-    QImage image;
-    if (image.load(fileInfo.filePath())) {
-        m_iconLabel->setPixmap(QPixmap::fromImage(image).scaled(ICON_SIZE, ICON_SIZE, Qt::KeepAspectRatio));
-    } else {
-        QIcon icon = QFileIconProvider().icon(fileInfo);
-        m_iconLabel->setPixmap(icon.pixmap(icon.actualSize(QSize(ICON_SIZE, ICON_SIZE))));
-    }
     this->m_layout->addWidget(this->m_iconLabel);
 
-    this->m_nameLabel = new QLabel(this);
-    this->m_nameLabel->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
-    this->m_nameLabel->setText(fileInfo.fileName());
-    this->m_layout->addWidget(this->m_nameLabel);
+    this->m_textWidget = new QWidget(this);
+    this->m_layout->addWidget(this->m_textWidget);
+    this->m_textLayout = new QVBoxLayout(this->m_textWidget);
+
+    this->m_nameLabel = new QLabel(this->m_textWidget);
+    this->m_nameLabel->setAlignment(Qt::AlignBottom | Qt::AlignLeft);
+    this->m_textLayout->addWidget(this->m_nameLabel);
+
+    this->m_filePathLabel = new QLabel(this->m_textWidget);
+    this->m_filePathLabel->setAlignment(Qt::AlignBottom | Qt::AlignLeft);
+    this->m_textLayout->addWidget(this->m_filePathLabel);
+
+    this->m_fileDataLabel = new QLabel(this->m_textWidget);
+    this->m_fileDataLabel->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    this->m_textLayout->addWidget(this->m_fileDataLabel);
+
+    this->m_textLayout->setContentsMargins(0, 8, 0, 8);
+    this->m_textLayout->setSpacing(0);
     this->m_layout->setContentsMargins(0, 0, 0, 0);
     this->m_nameLabel->setStyleSheet("QLabel { color: black; } ");
 
     this->setAttribute(Qt::WA_TranslucentBackground, true);
+    this->setFileInfo(fileInfo);
 }
 
 const QFileInfo &SmartDirItemWidget::fileInfo() const {
     return m_fileInfo;
+}
+
+void SmartDirItemWidget::setFileInfo(const QFileInfo &fileInfo) {
+    this->m_fileInfo = fileInfo;
+
+    this->m_iconLabel->setPixmap(SmartDirUtils::getFileIcon(fileInfo, ICON_SIZE, ICON_SIZE));
+
+    QString nameStr = fileInfo.fileName();
+    QFontMetrics font(this->m_nameLabel->font());
+    int font_size = font.width(nameStr);
+    if(font_size > this->width()){
+        nameStr = font.elidedText(nameStr, Qt::ElideMiddle, 300);
+    }
+    this->m_nameLabel->setText(nameStr);
+
+    QString pathStr = fileInfo.absoluteDir().absolutePath();
+    font = QFontMetrics(this->m_filePathLabel->font());
+    font_size = font.width(pathStr);
+    if(font_size > this->width()){
+        pathStr = font.elidedText(pathStr, Qt::ElideMiddle, 300);
+    }
+    this->m_filePathLabel->setText(pathStr);
+
+    QString dataStr = fileInfo.lastModified().toString();
+    font = QFontMetrics(this->m_fileDataLabel->font());
+    font_size = font.width(dataStr);
+    if(font_size > this->width()){
+        pathStr = font.elidedText(dataStr, Qt::ElideMiddle, 300);
+    }
+    this->m_fileDataLabel->setText(dataStr);
 }
 
 SmartDirTableWidget::SmartDirTableWidget(QWidget *parent)
