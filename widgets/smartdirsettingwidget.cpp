@@ -19,6 +19,9 @@ SmartDirSettingWidget::SmartDirSettingWidget(QWidget *parent) :
     connect(ui->maxSizeSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, [this](int n) {
         SmartDirSettings::instance()->setItemSize(n);
     });
+    connect(ui->countPerPageSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, [this](int n) {
+        SmartDirSettings::instance()->setCountPerPage(n);
+    });
 
     this->loadData();
 }
@@ -34,6 +37,7 @@ void SmartDirSettingWidget::loadData() {
         ui->listWidget->addItem(dirPath);
     }
     ui->maxSizeSpinBox->setValue(SmartDirSettings::instance()->getItemSize());
+    ui->countPerPageSpinBox->setValue(SmartDirSettings::instance()->getCountPerPage());
 }
 
 void SmartDirSettingWidget::removeCurrentPath() {

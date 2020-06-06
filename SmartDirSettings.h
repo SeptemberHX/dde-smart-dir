@@ -23,6 +23,12 @@ public:
 
     void setWatchedDirPaths(const QStringList &watchedDirPaths);
 
+    int getCountPerPage() const;
+
+    void setCountPerPage(int countPerPage);
+
+    void setDefaultCountPerPage();
+
 signals:
     void settingsChanged();
 
@@ -34,6 +40,7 @@ private:
 private:
     QStringList _watchedDirPaths;
     int itemSize;
+    int countPerPage;
 };
 
 

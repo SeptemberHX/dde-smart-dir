@@ -13,6 +13,7 @@ SmartDirSettings *SmartDirSettings::instance() {
 SmartDirSettings::SmartDirSettings() {
     this->_watchedDirPaths << "/home/septemberhx/Downloads" << "/home/septemberhx/Pictures";
     this->setDefaultItemSize();
+    this->setDefaultCountPerPage();
     this->readSettings();
 
     connect(this, &SmartDirSettings::settingsChanged, this, &SmartDirSettings::saveSettings);
@@ -50,4 +51,16 @@ void SmartDirSettings::readSettings() {
 void SmartDirSettings::setWatchedDirPaths(const QStringList &watchedDirPaths) {
     _watchedDirPaths = watchedDirPaths;
     emit settingsChanged();
+}
+
+int SmartDirSettings::getCountPerPage() const {
+    return countPerPage;
+}
+
+void SmartDirSettings::setCountPerPage(int countPerPage) {
+    SmartDirSettings::countPerPage = countPerPage;
+}
+
+void SmartDirSettings::setDefaultCountPerPage() {
+    this->countPerPage = 5;
 }
