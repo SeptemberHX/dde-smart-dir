@@ -4,11 +4,10 @@
 
 #include "SmartDirPluginWidget.h"
 
-#include <DStyle>
 #include <DGuiApplicationHelper>
 #include <constants.h>
+#include <QPainter>
 
-DWIDGET_USE_NAMESPACE
 
 SmartDirPluginWidget::SmartDirPluginWidget(QWidget *parent)
     : QLabel(parent)
