@@ -12,9 +12,10 @@ You can set a list of folders you want to watch, and this plugin can show the fi
 
 ## Screenshot
 
-<img src="./screenshots/screenshot1.png" width="400px" />
-<img src="./screenshots/screenshot2.png" width="400px" />
+<img src="./screenshots/screenshot1.png" width="400px" /> <img src="./screenshots/screenshot2.png" width="400px" />
+<img src="./screenshots/fan_style.png" width="400px" />
 
+> fan style is hardcoded so it is coded for panel.
 
 ## How to install
 
