@@ -36,7 +36,11 @@ void SmartDirPlugin::init(PluginProxyInterface *proxyInter) {
     connect(this->m_dirWatcher, &QFileSystemWatcher::directoryChanged, this->m_reloadTimer, qOverload<>(&QTimer::start));
     connect(this->m_reloadTimer, &QTimer::timeout, this, &SmartDirPlugin::reloadData);
 
-    connect(this->m_settingWidget, &SmartDirSettingWidget::closed, this->m_reloadTimer, qOverload<>(&QTimer::start));
+    connect(this->m_settingWidget, &SmartDirSettingWidget::closed, this, [this]() {
+        this->m_dirWatcher->removePaths(this->m_dirWatcher->directories());
+        this->m_dirWatcher->addPaths(SmartDirSettings::instance()->watchedDirPaths());
+        this->m_reloadTimer->start();
+    });
     connect(this->m_pluginWidget, &SmartDirPluginWidget::clicked, this, [this]() {
         int screenNum = QApplication::desktop()->screenNumber(this->m_pluginWidget);
         QScreen *screen = QApplication::screens()[screenNum];
@@ -49,6 +53,7 @@ void SmartDirPlugin::init(PluginProxyInterface *proxyInter) {
     if (!pluginIsDisable()) {
         this->m_proxyInter->itemAdded(this, this->pluginName());
     }
+    this->m_dirWatcher->addPaths(SmartDirSettings::instance()->watchedDirPaths());
     this->reloadData();
 }
 
@@ -145,6 +150,7 @@ void SmartDirPlugin::invokedMenuItem(const QString &itemKey, const QString &menu
 }
 
 void SmartDirPlugin::reloadData() {
+    qDebug() << "reload data";
     this->loadData(SmartDirUtils::fileInfoList(SmartDirSettings::instance()->watchedDirPaths()).mid(0, SmartDirSettings::instance()->getItemSize()));
 }
 

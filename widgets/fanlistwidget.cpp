@@ -44,22 +44,23 @@ void FanListWidget::resetWidget(QList<QFileInfo> infoList, int w, int h, int r)
             QDesktopServices::openUrl(QUrl::fromLocalFile(info.absoluteFilePath()));
         });
         widgetList.append(widget);
+
+        QGraphicsProxyWidget* pWidget = m_scene->addWidget(widget);
+        proxyWidgetList.append(pWidget);
     }
 
     int W, H, x0;
     calcGeo(w, h, r, this->widgetList.size(), &W, &H, &x0);
     this->setFixedSize(W, H);
 
-    QGraphicsProxyWidget* pWidget = m_scene->addWidget(this->widgetList[0]);
-    pWidget->setRotation(0);
-    pWidget->setPos(x0, 0);
+    proxyWidgetList[0]->setRotation(0);
+    proxyWidgetList[0]->setPos(x0, 0);
     for (i = 1; i < this->widgetList.size() && i < maxItemSize; ++i) {
         double angle = 0.0;
-        QGraphicsProxyWidget *t_pWidget = m_scene->addWidget(this->widgetList[i]);
+        QGraphicsProxyWidget *t_pWidget = proxyWidgetList[i];
         QPoint offset = calcOffset(w, h, r, i, &angle);
         t_pWidget->setRotation(angle);
         t_pWidget->setPos(x0 - offset.x(), 0 + offset.y());
-        qDebug() << x0 - offset.x() << offset.y();
     }
 }
 

@@ -24,8 +24,7 @@ protected:
 private:
     QList<SmartDirItemWidget*> widgetList;
     QGraphicsScene *m_scene;
-    QPropertyAnimation *m_buttonShowAnimation;
-    QPropertyAnimation *m_buttonHideAnimation;
+    QList<QGraphicsProxyWidget*> proxyWidgetList;
     QPoint dragStartPosition;
     QTimer *m_hideTimer;
 
