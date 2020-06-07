@@ -4,7 +4,6 @@
 
 #include "SmartDirPluginWidget.h"
 
-#include <DGuiApplicationHelper>
 #include <constants.h>
 #include <QPainter>
 
