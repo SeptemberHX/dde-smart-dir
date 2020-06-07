@@ -125,24 +125,24 @@ void SmartDirItemWidget::setFileInfo(const QFileInfo &fileInfo) {
     QString nameStr = fileInfo.fileName();
     QFontMetrics font(this->m_nameLabel->font());
     int font_size = font.width(nameStr);
-    if(font_size > this->width()){
-        nameStr = font.elidedText(nameStr, Qt::ElideMiddle, 300);
+    if(font_size > 290){
+        nameStr = font.elidedText(nameStr, Qt::ElideMiddle, 290);
     }
     this->m_nameLabel->setText(nameStr);
 
     QString pathStr = fileInfo.absoluteDir().absolutePath();
     font = QFontMetrics(this->m_filePathLabel->font());
     font_size = font.width(pathStr);
-    if(font_size > this->width()){
-        pathStr = font.elidedText(pathStr, Qt::ElideMiddle, 300);
+    if(font_size > 290){
+        pathStr = font.elidedText(pathStr, Qt::ElideMiddle, 290);
     }
     this->m_filePathLabel->setText(pathStr);
 
     QString dataStr = fileInfo.lastModified().toString();
     font = QFontMetrics(this->m_fileDataLabel->font());
     font_size = font.width(dataStr);
-    if(font_size > this->width()){
-        pathStr = font.elidedText(dataStr, Qt::ElideMiddle, 300);
+    if(font_size > 290){
+        pathStr = font.elidedText(dataStr, Qt::ElideMiddle, 290);
     }
     this->m_fileDataLabel->setText(dataStr);
 }
