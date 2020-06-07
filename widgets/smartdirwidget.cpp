@@ -63,6 +63,7 @@ void SmartDirWidget::loadData(const QFileInfoList &infoList)
 
 void SmartDirWidget::doubleClick(const QModelIndex &index) {
     if (index.isValid()) {
+        
         auto *itemWidget = dynamic_cast<SmartDirItemWidget *>(this->m_tableWidget->cellWidget(index.row(), 0));
         QDesktopServices::openUrl(QUrl::fromLocalFile(itemWidget->fileInfo().absoluteFilePath()));
     }
