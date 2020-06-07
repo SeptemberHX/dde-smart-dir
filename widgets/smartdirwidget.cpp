@@ -62,8 +62,10 @@ void SmartDirWidget::loadData(const QFileInfoList &infoList)
 }
 
 void SmartDirWidget::doubleClick(const QModelIndex &index) {
-    auto *itemWidget = dynamic_cast<SmartDirItemWidget*>(this->m_tableWidget->cellWidget(index.row(), 0));
-    QDesktopServices::openUrl(QUrl::fromLocalFile(itemWidget->fileInfo().absoluteFilePath()));
+    if (index.isValid()) {
+        auto *itemWidget = dynamic_cast<SmartDirItemWidget *>(this->m_tableWidget->cellWidget(index.row(), 0));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(itemWidget->fileInfo().absoluteFilePath()));
+    }
 }
 
 void SmartDirWidget::applySettings(const SmartDirSettings& settings) {
@@ -182,6 +184,9 @@ void SmartDirTableWidget::mouseMoveEvent(QMouseEvent *event) {
     if (!(event->buttons() & Qt::LeftButton))
         return;
     if ((event->pos() - dragStartPosition).manhattanLength() < QApplication::startDragDistance())
+        return;
+
+    if (this->currentRow() < 0)
         return;
 
     auto *itemWidget = dynamic_cast<SmartDirItemWidget*>(this->cellWidget(this->currentRow(), 0));
