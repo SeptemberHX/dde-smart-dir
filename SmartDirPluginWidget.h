@@ -16,6 +16,12 @@ public:
     explicit SmartDirPluginWidget(QWidget *parent = nullptr);
     void updateIcon();
 
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *ev) override;
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 

@@ -6,6 +6,8 @@
 #include "SmartDirSettings.h"
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
+#include "SmartDirUtils.h"
 
 #define PLUGIN_STATE_KEY "enable"
 
@@ -24,21 +26,39 @@ void SmartDirPlugin::init(PluginProxyInterface *proxyInter) {
     this->m_smartDirWidget->applySettings(*SmartDirSettings::instance());
     this->m_pluginWidget  = new SmartDirPluginWidget();
     this->m_settingWidget = new SmartDirSettingWidget();
+    this->m_fanListWidget = new FanListWidget();
 
-    connect(this->m_settingWidget, &SmartDirSettingWidget::closed, this->m_smartDirWidget, &SmartDirWidget::reloadData);
+    this->m_dirWatcher = new QFileSystemWatcher(this);
+    this->m_reloadTimer = new QTimer(this);
+    this->m_reloadTimer->setInterval(500);
+    this->m_reloadTimer->setSingleShot(true);
+
+    connect(this->m_dirWatcher, &QFileSystemWatcher::directoryChanged, this->m_reloadTimer, qOverload<>(&QTimer::start));
+    connect(this->m_reloadTimer, &QTimer::timeout, this, &SmartDirPlugin::reloadData);
+
+    connect(this->m_settingWidget, &SmartDirSettingWidget::closed, this->m_reloadTimer, qOverload<>(&QTimer::start));
+    connect(this->m_pluginWidget, &SmartDirPluginWidget::clicked, this, [this]() {
+        int screenNum = QApplication::desktop()->screenNumber(this->m_pluginWidget);
+        QScreen *screen = QApplication::screens()[screenNum];
+        int x = screen->geometry().width() - this->m_fanListWidget->width();
+        this->m_fanListWidget->move(x, 40);
+        this->m_fanListWidget->show();
+        this->m_fanListWidget->setFocus();
+    });
 
     if (!pluginIsDisable()) {
         this->m_proxyInter->itemAdded(this, this->pluginName());
     }
+    this->reloadData();
 }
 
 QWidget *SmartDirPlugin::itemWidget(const QString &itemKey) {
     return this->m_pluginWidget;
 }
 
-QWidget *SmartDirPlugin::itemPopupApplet(const QString &itemKey) {
-    return this->m_smartDirWidget;
-}
+//QWidget *SmartDirPlugin::itemPopupApplet(const QString &itemKey) {
+//    return this->m_smartDirWidget;
+//}
 
 bool SmartDirPlugin::pluginIsAllowDisable() {
     return true;
@@ -122,4 +142,13 @@ void SmartDirPlugin::invokedMenuItem(const QString &itemKey, const QString &menu
         this->m_settingWidget->show();
         this->m_settingWidget->show();
     }
+}
+
+void SmartDirPlugin::reloadData() {
+    this->loadData(SmartDirUtils::fileInfoList(SmartDirSettings::instance()->watchedDirPaths()).mid(0, SmartDirSettings::instance()->getItemSize()));
+}
+
+void SmartDirPlugin::loadData(const QFileInfoList &infoList)
+{
+    this->m_fanListWidget->resetWidget(infoList, 400, 70, 4000);
 }

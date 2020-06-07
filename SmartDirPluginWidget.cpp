@@ -6,6 +6,7 @@
 
 #include <constants.h>
 #include <QPainter>
+#include <QMouseEvent>
 
 
 SmartDirPluginWidget::SmartDirPluginWidget(QWidget *parent)
@@ -40,4 +41,11 @@ void SmartDirPluginWidget::updateIcon() {
     const auto ratio = devicePixelRatioF();
     this->m_icon = icon.pixmap(size * ratio, size * ratio);
     this->m_icon.setDevicePixelRatio(ratio);
+}
+
+void SmartDirPluginWidget::mousePressEvent(QMouseEvent *ev) {
+    if (ev->button() == Qt::LeftButton) {
+        emit clicked();
+    }
+    QLabel::mousePressEvent(ev);
 }

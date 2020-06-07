@@ -7,8 +7,11 @@
 
 #include <QObject>
 #include <dde-dock/pluginsiteminterface.h>
+#include <QFileSystemWatcher>
+#include <QTimer>
 #include "widgets/smartdirwidget.h"
 #include "SmartDirPluginWidget.h"
+#include "widgets/fanlistwidget.h"
 #include "widgets/smartdirsettingwidget.h"
 
 class SmartDirPlugin : public QObject, PluginsItemInterface {
@@ -31,7 +34,7 @@ public:
     // 返回插件的 widget
     QWidget *itemWidget(const QString &itemKey) override;
 
-    QWidget *itemPopupApplet(const QString &itemKey) override;
+//    QWidget *itemPopupApplet(const QString &itemKey) override;
 
     bool pluginIsAllowDisable() override;
     bool pluginIsDisable() override;
@@ -46,9 +49,16 @@ public:
     void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
 
 private:
+    void reloadData();
+    void loadData(const QFileInfoList& infoList);
+
     SmartDirWidget *m_smartDirWidget;
     SmartDirPluginWidget *m_pluginWidget;
     SmartDirSettingWidget *m_settingWidget;
+
+    QFileSystemWatcher *m_dirWatcher;
+    QTimer *m_reloadTimer;
+    FanListWidget *m_fanListWidget;
 };
 
 
