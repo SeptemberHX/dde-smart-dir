@@ -7,6 +7,11 @@
 #include <constants.h>
 #include <QPainter>
 
+#define PLUGIN_BACKGROUND_MIN_SIZE 20
+#define PLUGIN_BACKGROUND_MAX_SIZE 40
+#define PLUGIN_ICON_MIN_SIZE 20
+#define PROP_DISPLAY_MODE   "DisplayMode"
+
 
 SmartDirPluginWidget::SmartDirPluginWidget(QWidget *parent)
     : QLabel(parent)
