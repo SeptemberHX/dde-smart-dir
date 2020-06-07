@@ -1,4 +1,6 @@
-# DDE Smart Directory Dock Plugin for Deepin V20
+# DDE Smart Directory Dock Plugin for Deepin
+
+Support V20 & V15.11
 
 Inspired by Smart Folder on macOS.
 
