@@ -26,7 +26,7 @@ QFileInfoList SmartDirUtils::fileInfoList(const QStringList& pathList) {
     }
 
     qSort(infoList.begin(), infoList.end(), [](const QFileInfo& info1, const QFileInfo& info2) {
-        return info1.fileTime(QFile::FileModificationTime) > info2.fileTime(QFile::FileModificationTime);
+        return info1.lastModified() > info2.lastModified();
     });
     return infoList;
 }
