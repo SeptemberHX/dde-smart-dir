@@ -132,7 +132,7 @@
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="2">
+            <item row="2" column="2">
              <widget class="QSpinBox" name="maxSizeSpinBox">
               <property name="minimum">
                <number>10</number>
@@ -142,7 +142,7 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
+            <item row="2" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
                <string>Max Item Size</string>
@@ -152,14 +152,14 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="2" column="1">
              <widget class="QLabel" name="label_2">
               <property name="text">
                <string/>
               </property>
              </widget>
             </item>
-            <item row="2" column="0">
+            <item row="4" column="0">
              <spacer name="verticalSpacer_2">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
@@ -172,7 +172,7 @@
               </property>
              </spacer>
             </item>
-            <item row="1" column="0">
+            <item row="3" column="0">
              <widget class="QLabel" name="label_3">
               <property name="text">
                <string>Count per page</string>
@@ -182,13 +182,62 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
+            <item row="3" column="2">
              <widget class="QSpinBox" name="countPerPageSpinBox">
               <property name="minimum">
                <number>1</number>
               </property>
               <property name="maximum">
                <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QSpinBox" name="folderCountSpinBox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>4</number>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Folder Per Row</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_5">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>38</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Show Folder List</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QCheckBox" name="enableFolderListCheckBox">
+              <property name="text">
+               <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>32</width>
+                <height>32</height>
+               </size>
               </property>
              </widget>
             </item>

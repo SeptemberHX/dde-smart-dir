@@ -22,9 +22,15 @@ SmartDirSettingWidget::SmartDirSettingWidget(QWidget *parent) :
     connect(ui->countPerPageSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, [this](int n) {
         SmartDirSettings::instance()->setCountPerPage(n);
     });
+    connect(ui->folderCountSpinBox, qOverload<int>(&QSpinBox::valueChanged), this, [this](int n) {
+        SmartDirSettings::instance()->setDirCountPerRow(n);
+    });
+    connect(ui->enableFolderListCheckBox, &QCheckBox::stateChanged, this, [this]() {
+        SmartDirSettings::instance()->setEnableDirList(ui->enableFolderListCheckBox->isChecked());
+    });
 
     ui->appNameLabel->setText("DDE Smart Dir Plugin");
-    ui->appVersionLabel->setText("0.2.0");
+    ui->appVersionLabel->setText("0.3.0");
 
     this->loadData();
 }
@@ -41,6 +47,8 @@ void SmartDirSettingWidget::loadData() {
     }
     ui->maxSizeSpinBox->setValue(SmartDirSettings::instance()->getItemSize());
     ui->countPerPageSpinBox->setValue(SmartDirSettings::instance()->getCountPerPage());
+    ui->folderCountSpinBox->setValue(SmartDirSettings::instance()->getDirCountPerRow());
+    ui->enableFolderListCheckBox->setChecked(SmartDirSettings::instance()->isEnableDirList());
 }
 
 void SmartDirSettingWidget::removeCurrentPath() {
