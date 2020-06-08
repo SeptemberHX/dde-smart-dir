@@ -5,34 +5,17 @@
 #include <QFileInfoList>
 #include <QLabel>
 #include <QHBoxLayout>
+#include <QGridLayout>
 #include <QTableWidgetItem>
 #include <QFileSystemWatcher>
+#include <QGroupBox>
+#include <QPushButton>
 #include "SmartDirSettings.h"
 
 namespace Ui {
 class SmartDirWidget;
 }
 
-
-class SmartDirItemWidget : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
-    const QFileInfo& fileInfo() const;
-    void setFileInfo(const QFileInfo& fileInfo);
-
-private:
-    QFileInfo m_fileInfo;
-    QLabel *m_iconLabel;
-    QLabel *m_nameLabel;
-    QHBoxLayout *m_layout;
-    QVBoxLayout *m_textLayout;
-    QWidget *m_textWidget;
-    QLabel *m_filePathLabel;
-    QLabel *m_fileDataLabel;
-};
 
 class SmartDirTableWidget : public QTableWidget
 {
@@ -70,12 +53,17 @@ public:
 
 private slots:
     void doubleClick(const QModelIndex& index);
+    void dirButtonClicked();
 
 private:
     SmartDirTableWidget *m_tableWidget;
     QVBoxLayout *m_layout;
     QFileSystemWatcher *m_dirWatcher;
     QTimer *m_reloadTimer;
+
+    QGroupBox *m_dirBox;
+    QGridLayout *m_boxLayout;
+    QList<QPushButton*> buttonList;
 };
 
 #endif // SMARTDIRWIDGET_H

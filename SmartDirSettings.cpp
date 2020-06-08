@@ -14,6 +14,8 @@ SmartDirSettings::SmartDirSettings() {
     this->_watchedDirPaths << "/home/septemberhx/Downloads" << "/home/septemberhx/Pictures";
     this->setDefaultItemSize();
     this->setDefaultCountPerPage();
+    this->setDefaultDirCountPerRow();
+    this->setDefaultEnableDirList();
     this->readSettings();
 
     connect(this, &SmartDirSettings::settingsChanged, this, &SmartDirSettings::saveSettings);
@@ -41,6 +43,8 @@ void SmartDirSettings::saveSettings() {
     settings.setValue("main/dirs", this->_watchedDirPaths);
     settings.setValue("main/size", this->itemSize);
     settings.setValue("main/countPerPage", this->countPerPage);
+    settings.setValue("main/dirCountPerRow", this->dirCountPerRow);
+    settings.setValue("main/enableDirList", this->enableDirList);
 }
 
 void SmartDirSettings::readSettings() {
@@ -48,6 +52,8 @@ void SmartDirSettings::readSettings() {
     this->_watchedDirPaths = settings.value("main/dirs", this->watchedDirPaths()).value<QStringList>();
     this->itemSize = settings.value("main/size", this->itemSize).toUInt();
     this->countPerPage = settings.value("main/countPerPage", this->countPerPage).toUInt();
+    this->dirCountPerRow = settings.value("main/dirCountPerRow", this->dirCountPerRow).toUInt();
+    this->enableDirList = settings.value("main/enableDirList", this->enableDirList).toBool();
 }
 
 void SmartDirSettings::setWatchedDirPaths(const QStringList &watchedDirPaths) {
@@ -66,4 +72,30 @@ void SmartDirSettings::setCountPerPage(int countPerPage) {
 
 void SmartDirSettings::setDefaultCountPerPage() {
     this->countPerPage = 5;
+}
+
+void SmartDirSettings::setDefaultDirCountPerRow() {
+    this->dirCountPerRow = 3;
+}
+
+int SmartDirSettings::getDirCountPerRow() const {
+    return dirCountPerRow;
+}
+
+void SmartDirSettings::setDirCountPerRow(int dirCountPerRow) {
+    SmartDirSettings::dirCountPerRow = dirCountPerRow;
+    emit settingsChanged();
+}
+
+void SmartDirSettings::setDefaultEnableDirList() {
+    this->enableDirList = true;
+}
+
+bool SmartDirSettings::isEnableDirList() const {
+    return enableDirList;
+}
+
+void SmartDirSettings::setEnableDirList(bool enableDirList) {
+    SmartDirSettings::enableDirList = enableDirList;
+    emit settingsChanged();
 }

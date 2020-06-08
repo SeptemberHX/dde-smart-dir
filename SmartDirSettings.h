@@ -27,7 +27,19 @@ public:
 
     void setCountPerPage(int countPerPage);
 
+    int getDirCountPerRow() const;
+
+    void setDirCountPerRow(int dirCountPerRow);
+
+    bool isEnableDirList() const;
+
+    void setEnableDirList(bool enableDirList);
+
     void setDefaultCountPerPage();
+
+    void setDefaultDirCountPerRow();
+
+    void setDefaultEnableDirList();
 
 signals:
     void settingsChanged();
@@ -41,6 +53,9 @@ private:
     QStringList _watchedDirPaths;
     int itemSize;
     int countPerPage;
+
+    int dirCountPerRow;
+    bool enableDirList;
 };
 
 
