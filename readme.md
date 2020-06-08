@@ -9,11 +9,12 @@ You can set a list of folders you want to watch, and this plugin can show the fi
 * Left double click to open file
 * drag & move support
 * right click to open folder
+* quick folder list
 
 ## Screenshot
 
-<img src="./screenshots/screenshot1.png" width="400px" /> <img src="./screenshots/screenshot2.png" width="400px" />
-<img src="./screenshots/fan_style.png" width="400px" />
+<img src="./screenshots/screenshot1.png" width="400px" /> <img src="./screenshots/screenshot1-2.png" width="400px" />
+<img src="./screenshots/screenshot2.png" width="400px" /> <img src="./screenshots/fan_style.png" width="400px" />
 
 > fan style is hardcoded so it is coded for panel.
 
