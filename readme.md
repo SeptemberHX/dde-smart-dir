@@ -21,3 +21,5 @@ You can set a list of folders you want to watch, and this plugin can show the fi
 ## How to install
 
 Download the release file and put the `.so` file to the plugin path.
+
+Or install the `.deb` package
