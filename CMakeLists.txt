@@ -49,3 +49,16 @@ target_link_libraries(${PLUGIN_NAME} PRIVATE
         ${DtkWidget_LIBRARIES}
         ${DdeDockInterface_LIBRARIES}
         )
+
+INSTALL(TARGETS ${PLUGIN_NAME} DESTINATION /usr/lib/dde-dock/plugins/)
+
+SET(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_NAME dde-dock-smartdir-plugin)
+set(CPACK_DEBIAN_PACKAGE_VERSION 0.3.0)
+set(CPACK_DEBIAN_PACKAGE_RELEASE 1)
+set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "SeptemberHX<september_hx@outlook.com>")
+set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Smart Directory inspired by smart folder on macOs")
+set(CPACK_DEBIAN_FILE_NAME "${CPACK_DEBIAN_PACKAGE_NAME}-${CPACK_DEBIAN_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_ARCHITECTURE}.deb")
+
+include(CPack)
