@@ -11,6 +11,7 @@
 #include <QGroupBox>
 #include <QPushButton>
 #include "SmartDirSettings.h"
+#include "../DirsWatcher.h"
 
 namespace Ui {
 class SmartDirWidget;
@@ -39,6 +40,7 @@ private:
     QPoint dragStartPosition;
 };
 
+class UIRefreshThread;
 
 class SmartDirWidget : public QWidget
 {
@@ -51,9 +53,12 @@ public:
 
     void reloadData();
 
+friend class UIRefreshThread;
+
 private slots:
     void doubleClick(const QModelIndex& index);
     void dirButtonClicked();
+    void drawData();
 
 private:
     SmartDirTableWidget *m_tableWidget;
@@ -64,6 +69,31 @@ private:
     QGroupBox *m_dirBox;
     QGridLayout *m_boxLayout;
     QList<QPushButton*> buttonList;
+
+    DirsWatcher *m_dirsWatcher;
+    UIRefreshThread *m_refreshThread;
+
+    QFileInfoList fileInfoList;
 };
+
+
+class UIRefreshThread : public QThread {
+Q_OBJECT
+
+public:
+    UIRefreshThread(QObject *parent, SmartDirWidget *uiWidget);
+    void setFileInfoList(const QFileInfoList &fileInfoList);
+
+signals:
+    void fileInfoPrepared();
+
+protected:
+    void run() override;
+
+private:
+    SmartDirWidget *m_uiWidget;
+    QFileInfoList fileInfoList;
+};
+
 
 #endif // SMARTDIRWIDGET_H

@@ -7,6 +7,7 @@
 
 #include <QStringList>
 #include <QObject>
+#include <QMap>
 
 class SmartDirSettings : public QObject {
     Q_OBJECT
@@ -41,6 +42,10 @@ public:
 
     void setDefaultEnableDirList();
 
+    const QMap<QString, bool> &getEnableDirFlagMap() const;
+
+    void setEnableDirFlagMap(const QMap<QString, bool> &enableDirFlagMap);
+
 signals:
     void settingsChanged();
 
@@ -51,6 +56,7 @@ private:
 
 private:
     QStringList _watchedDirPaths;
+    QMap<QString, bool> enableDirFlagMap;
     int itemSize;
     int countPerPage;
 

@@ -18,7 +18,8 @@ file(GLOB SRCS "SmartDirPlugin.h" "SmartDirPlugin.cpp"
         "widgets/smartdirsettingwidget.h" "widgets/smartdirsettingwidget.cpp" "widgets/smartdirsettingwidget.ui"
         "widgets/SpecialLabel.h" "widgets/SpecialLabel.cpp"
         "widgets/SmartDirItemWidget.h" "widgets/SmartDirItemWidget.cpp"
-        "widgets/smartdirwidget.h" "widgets/smartdirwidget.cpp" "resource.qrc")
+        "widgets/smartdirwidget.h" "widgets/smartdirwidget.cpp" "resource.qrc"
+        "DirsWatcher.h" "DirsWatcher.cpp")
 
 find_package(Qt5Widgets REQUIRED)
 find_package(DtkWidget REQUIRED)

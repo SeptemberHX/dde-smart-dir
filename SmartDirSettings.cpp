@@ -45,6 +45,12 @@ void SmartDirSettings::saveSettings() {
     settings.setValue("main/countPerPage", this->countPerPage);
     settings.setValue("main/dirCountPerRow", this->dirCountPerRow);
     settings.setValue("main/enableDirList", this->enableDirList);
+
+    QMap<QString, QVariant> dirFlagMap;
+    for (const QString& path : this->enableDirFlagMap.keys()) {
+        dirFlagMap.insert(path, this->enableDirFlagMap[path]);
+    }
+    settings.setValue("main/enableDirFlagMap", dirFlagMap);
 }
 
 void SmartDirSettings::readSettings() {
@@ -54,6 +60,11 @@ void SmartDirSettings::readSettings() {
     this->countPerPage = settings.value("main/countPerPage", this->countPerPage).toUInt();
     this->dirCountPerRow = settings.value("main/dirCountPerRow", this->dirCountPerRow).toUInt();
     this->enableDirList = settings.value("main/enableDirList", this->enableDirList).toBool();
+
+    auto dirFlagMap = settings.value("main/enableDirList", QMap<QString, QVariant>()).toMap();
+    for (const QString& path : dirFlagMap.keys()) {
+        this->enableDirFlagMap.insert(path, dirFlagMap[path].toBool());
+    }
 }
 
 void SmartDirSettings::setWatchedDirPaths(const QStringList &watchedDirPaths) {
@@ -97,5 +108,14 @@ bool SmartDirSettings::isEnableDirList() const {
 
 void SmartDirSettings::setEnableDirList(bool enableDirList) {
     SmartDirSettings::enableDirList = enableDirList;
+    emit settingsChanged();
+}
+
+const QMap<QString, bool> &SmartDirSettings::getEnableDirFlagMap() const {
+    return enableDirFlagMap;
+}
+
+void SmartDirSettings::setEnableDirFlagMap(const QMap<QString, bool> &enableDirFlagMap) {
+    SmartDirSettings::enableDirFlagMap = enableDirFlagMap;
     emit settingsChanged();
 }

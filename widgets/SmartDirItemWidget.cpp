@@ -7,16 +7,14 @@
 #include <QDateTime>
 #include <QDir>
 #include <QGraphicsDropShadowEffect>
+#include <QDebug>
 
 #define ICON_SIZE 60
 
-SmartDirItemWidget::SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent)
+SmartDirItemWidget::SmartDirItemWidget(QWidget *parent)
         : QWidget(parent)
 {
     this->m_layout = new QHBoxLayout(this);
-    this->m_fileInfo = fileInfo;
-
-    this->setToolTip(fileInfo.absoluteFilePath());
 
     this->m_iconLabel = new QLabel(this);
     m_iconLabel->setFixedSize(ICON_SIZE, ICON_SIZE);
@@ -53,7 +51,6 @@ SmartDirItemWidget::SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent)
     this->m_nameLabel->setStyleSheet("QLabel { color: black; } ");
 
     this->setAttribute(Qt::WA_TranslucentBackground, true);
-    this->setFileInfo(fileInfo);
 }
 
 const QFileInfo &SmartDirItemWidget::fileInfo() const {
@@ -61,9 +58,11 @@ const QFileInfo &SmartDirItemWidget::fileInfo() const {
 }
 
 void SmartDirItemWidget::setFileInfo(const QFileInfo &fileInfo) {
+    this->setToolTip(fileInfo.absoluteFilePath());
     this->m_fileInfo = fileInfo;
 
-    this->m_iconLabel->setPixmap(SmartDirUtils::getFileIcon(fileInfo, ICON_SIZE, ICON_SIZE));
+    // use simple icon first. After thumbnails generated, the icons will be replaced
+    this->m_iconLabel->setPixmap(SmartDirUtils::getSimpleIcon(fileInfo, ICON_SIZE, ICON_SIZE));
 
     QString nameStr = fileInfo.fileName();
     this->m_nameLabel->setText(nameStr);
@@ -84,4 +83,8 @@ void SmartDirItemWidget::setFileInfo(const QFileInfo &fileInfo) {
         pathStr = font.elidedText(dataStr, Qt::ElideMiddle, 290);
     }
     this->m_fileDataLabel->setText(dataStr);
+}
+
+void SmartDirItemWidget::refreshIcon() {
+    this->m_iconLabel->setPixmap(SmartDirUtils::getFileIcon(this->fileInfo(), ICON_SIZE, ICON_SIZE));
 }

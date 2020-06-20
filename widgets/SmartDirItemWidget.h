@@ -18,9 +18,10 @@ class SmartDirItemWidget : public QWidget
 Q_OBJECT
 
 public:
-    explicit SmartDirItemWidget(QFileInfo fileInfo, QWidget *parent = nullptr);
+    explicit SmartDirItemWidget(QWidget *parent = nullptr);
     const QFileInfo& fileInfo() const;
     void setFileInfo(const QFileInfo& fileInfo);
+    void refreshIcon();
 
 private:
     QFileInfo m_fileInfo;

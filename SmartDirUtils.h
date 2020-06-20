@@ -16,6 +16,7 @@ class SmartDirUtils {
 public:
     static QFileInfoList fileInfoList(const QStringList& pathList);
     static const QPixmap& getFileIcon(const QFileInfo& fileInfo, int w, int h);
+    static const QPixmap& getSimpleIcon(const QFileInfo& fileInfo, int w, int h);
 
 private:
     static QCache<QString, QPixmap> pixmapCache;

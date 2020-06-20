@@ -49,3 +49,18 @@ const QPixmap& SmartDirUtils::getFileIcon(const QFileInfo &fileInfo, int w, int 
     }
     return *pixmapCache[key];
 }
+
+const QPixmap &SmartDirUtils::getSimpleIcon(const QFileInfo &fileInfo, int w, int h) {
+    QString key = QString("%1_%2").arg(fileInfo.absoluteFilePath(), QString::number(fileInfo.lastModified().toMSecsSinceEpoch()));
+    if (!pixmapCache.contains(key)) {
+        QIcon icon = QFileIconProvider().icon(fileInfo);
+        auto *pixmap = new QPixmap(icon.pixmap(w, h));
+        QMimeType mime = db.mimeTypeForFile(fileInfo);
+        if (!mime.name().startsWith("image")) {
+            pixmapCache.insert(key, pixmap);
+        }
+        return *pixmap;
+    } else {
+        return *pixmapCache[key];
+    }
+}

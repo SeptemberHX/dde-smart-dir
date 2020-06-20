@@ -10,7 +10,6 @@
 #define PLUGIN_STATE_KEY "enable"
 
 SmartDirPlugin::SmartDirPlugin(QObject *parent) : QObject(parent) {
-
 }
 
 const QString SmartDirPlugin::pluginName() const {
