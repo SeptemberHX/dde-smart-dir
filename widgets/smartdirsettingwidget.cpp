@@ -33,7 +33,7 @@ SmartDirSettingWidget::SmartDirSettingWidget(QWidget *parent) :
     });
 
     ui->appNameLabel->setText("DDE Smart Dir Plugin");
-    ui->appVersionLabel->setText("0.3.0");
+    ui->appVersionLabel->setText("0.4.0-rc1");
 
     this->loadData();
 }
