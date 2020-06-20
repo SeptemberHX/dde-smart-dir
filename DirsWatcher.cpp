@@ -27,11 +27,11 @@ void DirsWatcher::reload() {
     for (const QString& dirPath : stringList) {
         QDir dir(dirPath);
         if (dir.exists()) {
-//            if (subFlagMap.contains(dirPath) && subFlagMap[dirPath]) {
+            if (subFlagMap.contains(dirPath) && subFlagMap[dirPath]) {
                 this->watchDirRecursively(dirPath);
-//            } else {
-//                this->m_watcher->addPath(dirPath);
-//            }
+            } else {
+                this->m_watcher->addPath(dirPath);
+            }
         }
     }
 

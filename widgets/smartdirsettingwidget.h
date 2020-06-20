@@ -25,6 +25,7 @@ private:
 
     void removeCurrentPath();
     void addNewPath();
+    void subDirChanged();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

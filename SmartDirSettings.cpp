@@ -4,6 +4,7 @@
 
 #include "SmartDirSettings.h"
 #include <QSettings>
+#include <QDebug>
 
 SmartDirSettings *SmartDirSettings::instance() {
     static auto *inst = new SmartDirSettings();
@@ -46,11 +47,11 @@ void SmartDirSettings::saveSettings() {
     settings.setValue("main/dirCountPerRow", this->dirCountPerRow);
     settings.setValue("main/enableDirList", this->enableDirList);
 
-    QMap<QString, QVariant> dirFlagMap;
+    settings.beginGroup("subDirMap");
     for (const QString& path : this->enableDirFlagMap.keys()) {
-        dirFlagMap.insert(path, this->enableDirFlagMap[path]);
+        settings.setValue(path, this->enableDirFlagMap[path]);
     }
-    settings.setValue("main/enableDirFlagMap", dirFlagMap);
+    settings.endGroup();
 }
 
 void SmartDirSettings::readSettings() {
@@ -61,10 +62,12 @@ void SmartDirSettings::readSettings() {
     this->dirCountPerRow = settings.value("main/dirCountPerRow", this->dirCountPerRow).toUInt();
     this->enableDirList = settings.value("main/enableDirList", this->enableDirList).toBool();
 
-    auto dirFlagMap = settings.value("main/enableDirList", QMap<QString, QVariant>()).toMap();
-    for (const QString& path : dirFlagMap.keys()) {
-        this->enableDirFlagMap.insert(path, dirFlagMap[path].toBool());
+    settings.beginGroup("subDirMap");
+    for (const QString& path : settings.allKeys()) {
+        qDebug() << path << settings.value(path).toBool();
+        this->enableDirFlagMap.insert(QString("/") + path, settings.value(path).toBool());
     }
+    settings.endGroup();
 }
 
 void SmartDirSettings::setWatchedDirPaths(const QStringList &watchedDirPaths) {
