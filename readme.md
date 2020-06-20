@@ -18,6 +18,8 @@ You can set a list of folders you want to watch, and this plugin can show the fi
 
 > fan style is hardcoded so it is coded for panel.
 
-## How to install
+## How to install (Deepin V20)
 
 Download the release file and put the `.so` file to the plugin path.
+
+Or install the `.deb` package
