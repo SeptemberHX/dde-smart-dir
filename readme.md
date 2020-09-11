@@ -26,10 +26,11 @@ Or install the `.deb` package
 
 ## How to Run
 
-git clone https://github.com/SeptemberHX/dde-smart-dir.git
-`cd dde-smart-dir`
-`mkdir build`
-`cd build`
-`cmake ..`
-`make`
-`cp libdde-smart-dir.so /usr/lib/dde-dock/plugins`
+*git clone https://github.com/SeptemberHX/dde-smart-dir.git
+*`cd dde-smart-dir`
+*`mkdir build`
+*`cd build`
+*`cmake ..`
+*`make`
+*`cp libdde-smart-dir.so /usr/lib/dde-dock/plugins`
+* `killall dde-dock`
