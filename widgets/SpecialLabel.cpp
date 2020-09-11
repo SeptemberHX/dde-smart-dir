@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QFontMetrics>
+#include <qpainterpath.h>
 
 SpecialLabel::SpecialLabel(QWidget *parent,  QColor bgC, QColor fC)
     : QLabel(parent)
@@ -29,12 +30,12 @@ void SpecialLabel::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::HighQualityAntialiasing);
 
-    QPainterPath path;
-    path.addRoundedRect(rect, radius, radius);
+    QPainterPath *path = new QPainterPath;
+    path->addRoundedRect(rect, radius, radius);
     QPen pen(this->bgColor, 1);
     p.setPen(pen);
-    p.fillPath(path, this->bgColor);
-    p.drawPath(path);
+    p.fillPath(*path, this->bgColor);
+    p.drawPath(*path);
 
     p.setPen(this->fontColor);
     rect.moveLeft(this->rect().left() + radius / 2);
