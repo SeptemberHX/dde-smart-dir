@@ -23,3 +23,14 @@ You can set a list of folders you want to watch, and this plugin can show the fi
 Download the release file and put the `.so` file to the plugin path.
 
 Or install the `.deb` package
+
+## How to Run
+
+* git clone https://github.com/SeptemberHX/dde-smart-dir.git
+* `cd dde-smart-dir`
+* `mkdir build`
+* `cd build`
+* `cmake ..`
+* `make`
+* `cp libdde-smart-dir.so /usr/lib/dde-dock/plugins`
+* `killall dde-dock`
